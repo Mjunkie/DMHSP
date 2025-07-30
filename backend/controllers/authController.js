@@ -74,3 +74,16 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: "Login failed" });
   }
 };
+// @desc    Get user profile
+exports.getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to get profile" });
+  }
+};
