@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const quizResponseController = require("../controllers/quizResponseController");
 const { protect, admin } = require("../middleware/authMiddleware");
+
 // Submit individual question response
-router.post("/submit", authMiddleware, quizResponseController.submitResponse);
+router.post("/submit", protect, quizResponseController.submitResponse);
 
 // Get all responses by user
-router.get("/user", authMiddleware, quizResponseController.getUserResponses);
+router.get("/user", protect, quizResponseController.getUserResponses);
 
 module.exports = router;
-
