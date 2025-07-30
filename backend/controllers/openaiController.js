@@ -15,18 +15,18 @@ const chatWithBot = async (req, res) => {
   }
 
   try {
-    const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo", // You can switch to "gpt-4" if allowed
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: message }],
     });
 
-    const botReply = completion.data.choices[0].message.content;
+    const botReply = completion.choices[0].message.content;
     res.status(200).json({ reply: botReply });
   } catch (error) {
-    console.error("OpenAI Error:", error.response?.data || error.message);
+    console.error("OpenAI Error:", error);
     res.status(500).json({
       error: "Failed to get chatbot response",
-      details: error.response?.data || error.message,
+      details: error,
     });
   }
 };
